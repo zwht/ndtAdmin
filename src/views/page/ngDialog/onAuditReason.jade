@@ -1,0 +1,9 @@
+.modal-header
+    button(type="button" ng-click="closeThisDialog()" class="close" data-dismiss="modal")
+        span(aria-hidden="true" ng-click="close()") ×
+    h4.modal-title 不允许通过原因
+.modal-body.clear
+    textarea(ng-model="reason")
+.modal-footer
+    button.btn.success.btn-save(type="button" ng-click="save()") 确定
+    button.btn.btn-state-close(type="button" ng-click="closeThisDialog()") 关闭

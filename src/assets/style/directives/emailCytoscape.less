@@ -1,0 +1,32 @@
+.emailCytoscape {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border-top: 1px solid @borderColor;
+  .navigatorBox {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 200px;
+    height: 200px;
+    border: 1px solid @borderColor;
+    overflow: hidden;
+    background: @white;
+    z-index: 10;
+  }
+  .toolBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    background: lighten(@borderColor, 9%);
+    border-right: 1px solid @borderColor;
+    z-index: 10;
+  }
+  .cytoscapeBox {
+    width: 100%;
+    height: 100%;
+  }
+
+}

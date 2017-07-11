@@ -1,0 +1,34 @@
+ul.menu1.no-select
+    li(ng-repeat="item in menuList" ng-class="{disable:item.disable}" ng-click="click(item,$event)")
+        .line(ng-if="item.name=='line'")
+        .menuItem.clear2(ng-show="item.name!='line'" ng-class="{hover:item.hover}")
+            .itemText(ng-mouseenter="mouseOver($event,item)")
+                .menuIcon.pull-left
+                    i(ng-if="item.active" class="icon icon-done")
+                .pull-left
+                    span.no-select(ng-bind="item.name")
+                div(ng-if="item.children.length || item.other" class="menuRight pull-right")
+                    i(class="icon icon-triangle-right")
+            .charBox(ng-show="item.hover" ng-style="item.style")
+                ul.menu2(ng-if="item.children.length")
+                    li(ng-repeat="item2 in item.children" ng-click="click(item2,$event,true)")
+                        .menuItem.clear2
+                            .menuIcon.pull-left
+                                i(ng-if="item2.active" class="icon icon-done")
+                            .pull-left.overflow
+                                span.no-select(ng-bind="item2.name")
+                            div(ng-if="item2.children.length" class="menuRight pull-right")
+                                i.icon.icon-triangle-right
+                        ul.menu3(ng-show="item2.children.length")
+                            li(ng-repeat="item3 in item2.children" ng-click="click(item3,$event,true)")
+                                .menuItem.clear2
+                                    .menuIcon.pull-left
+                                        i(ng-if="item3.active" class="icon icon-done")
+                                    .pull-left.overflow
+                                        span.no-select(ng-bind="item3.name")
+                                    div(ng-if="item3.children.length" class="menuRight pull-right")
+                                        i.icon.icon-triangle-right
+
+
+
+

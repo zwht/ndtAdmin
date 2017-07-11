@@ -1,0 +1,58 @@
+.btn{
+  min-width: 75px;
+  display: inline-block;
+  border-radius: 2px;
+  padding: 0 20px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #737373;
+  margin-right: 5px;
+  border: 1px solid @btnDefault;
+  background-color: @white;
+  cursor: pointer;
+  &.warning{
+    border: 1px solid @warning;
+    color: @warning;
+    &:hover {
+      border-color: darken(@warning, 5%)
+    }
+  }
+  &.green{
+    border: 1px solid @btnSuccess;
+    color: @btnSuccess;
+    &:hover {
+      border-color: darken(@btnSuccess, 5%)
+    }
+  }
+  &.success {
+    border: 1px solid @btnSuccess;
+    background: @btnSuccess;
+    color: @white;
+    margin-right: 5px;
+    &:hover {
+      background: darken(@btnSuccess, 5%)
+    }
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+  &:disabled{ cursor: no-drop; background: #ccc; color:#888; border: 1px solid #ccc;
+    &:hover{ opacity: 1; background: #ccc;}
+  }
+}
+
+.bggreen {
+  border: none;
+  background-color: @btnSuccess;
+  border-radius: 3px;
+  color: @white;
+  font-weight: 600;
+}
+
+.sa-button-container {
+  .confirm {
+    background: @btnSuccess !important;
+    box-shadow: none !important;
+  }
+}

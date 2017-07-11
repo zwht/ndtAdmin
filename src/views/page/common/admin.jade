@@ -1,0 +1,57 @@
+.adminBox.no-select
+    .navigation
+        .big
+            a.logo()
+                span 农贷通--后台管理平台
+                //img(src="assets/images/logo.png")
+            ul.menuOne()
+                li( ng-repeat="item in menu" ng-click="jump(item)" ng-if="item.data.name!='demo例子'" ng-class="{'active':item.active}")
+                    span(ng-bind="item.data.name" )
+                    //span(ng-if="item.data.char.length")
+                        i.icon.icon-triangle-down(ng-if="!item.active")
+                        i.icon.icon-triangle-up(ng-if="item.active")
+            .navRight
+                .userBox(ng-class="{showTeme:showUserBoxKey}")
+                    img.clickBtn(ng-click="showUserBox()" src="assets/images/common/set.png")
+                    .popover-box
+
+                        .arrow
+                        .cursor-p
+                            p(ng-click="goResetPassword()") 个人中心
+                            p(ng-click="goOut()") 退出
+                .themeBox(ng-class="{showTeme:showThemeKey}")
+                    img.clickBtn(ng-click="showTheme()" src="assets/images/common/theme.png")
+                    .popover-box
+                        .arrow
+                        .item.cursor-p(ng-repeat="item in themes" ng-class="{active:item.active}"
+                        style="background:{{item.color}}"
+                        ng-click="themeChange(item.name)") {{item.name}}
+                div 用户名:{{userName}}
+    .phoneNavigation
+        a.logo()
+            span
+            img(src="assets/images/logo.png")
+            ul.iconBar(ng-click="showPhoneNav()")
+                li
+                li
+                li
+        .phoneNavBox(ng-class="{show:PhoneNav}")
+            .navBox
+                ul
+                    li(ng-click="goToPage1()" ng-repeat="item in menu")
+                        span(ng-bind="item.data.name" ng-click="jump(item)" ng-class="{'active':item.active}")
+            .personalBox
+                ul
+                    li
+                        img.clickBtn(ng-click="showTheme()" src="assets/images/common/theme.png")
+                    li
+                        p.name 用户名:{{userName}}
+                    li
+                        p.exit(ng-click="goOut()") 退出
+
+#mainBox(ng-class="{noSubMenu:!subMenu.length}")
+    #mainBoxB
+        ul.subMenu.clear(ng-if="subMenu.length")
+            li(ng-repeat="obj in subMenu" ng-click="jumpSub(obj)" ng-class="{'active':obj.active}")
+                span.overflow(ng-bind="obj.data.name")
+        .twoRouting(ui-view="")

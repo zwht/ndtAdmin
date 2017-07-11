@@ -1,0 +1,19 @@
+.loginHtml
+    .loginBox
+        p.logo
+            img(src="../assets/images/common/logo.png")
+        .group
+            i.icon.icon-user
+            input(max-input="50" type="text" ng-model="userName" placeholder="用户名或邮箱" ng-focus="loginFoucus()")
+        .group
+            i.icon.icon-password
+            input(max-input="50" type="password" ng-model="password" placeholder="密码" ng-focus="loginFoucus()")
+        .group
+            .saveWod(ng-click="choose()" )
+                input(type="checkbox" ng-checked="KeepPwd" ng-mudel="KeepPwd")
+                a.savePwd 记住密码
+            //a.forget 忘记密码？
+        .group
+            input(type="button" ng-value="loginText" value="登   录" ng-click="loginGo()")
+        .group
+            p(ng-bind="err")

@@ -1,0 +1,67 @@
+.screenArea{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-weight: 800;
+  overflow: auto;
+  line-height: 30px;
+  padding: 15px 5px;
+  .screenLeft{
+   ul{
+     &:after {
+       content: " ";
+       height: 0;
+       width: 0;
+       visibility: hidden;
+       display: block;
+       clear: both
+     }
+     li{
+       height: 35px;
+       margin: 0 5px;
+       float: left;
+       label, span, input, button, i, b {
+         vertical-align: middle;
+       }
+       label{
+         padding: 0 6px;
+       }
+       input,select {
+         border: 1px solid @borderColor;
+         padding-left: 6px;
+         border-radius: 3px;
+         height: 30px;
+       }
+       & > select {
+         min-width: 120px;
+         margin-top:1px;
+       }
+       input.source{
+         width: 120px;
+       }
+     }
+   }
+  }
+  .screenPadLeft{
+    padding-right: 250px;
+  }
+  .disScreenPadLeft {
+    padding-right: 150px;
+  }
+  .screenRight{
+    line-height:30px;
+    position: absolute;
+    top: 55px;
+    right: 10px;
+    height: 30px;
+    label{
+      font-weight: normal;
+      vertical-align: middle;
+    }
+    select{
+      margin: 0 5px;
+      min-width: 120px;
+    }
+  }
+}

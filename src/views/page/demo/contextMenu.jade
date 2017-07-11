@@ -1,0 +1,7 @@
+.demoContextMenu
+    ul(style="padding:100px;")
+        li(ng-repeat="item in contextMenuTestList")
+            span(context-menu="contextMenuList" parent-position='1' context-id="item" call-back="contextMenuCallBack"
+            ng-bind="item.name")
+            i.icon.icon-arrow-down(context-menu="contextMenuList" parent-position='1' context-id="item" call-back="contextMenuCallBack"
+            run-event="click")

@@ -1,0 +1,47 @@
+.ngDialogFileContent {
+  height: 100%;
+  padding: 20px !important;
+  .ngdialog-content {
+    width: 80% !important;
+    height: 100% !important;
+    position: relative;
+  }
+  .modal-body {
+    height: 100%;
+    padding-bottom: 0;
+    padding-top: 0;
+    .contn {
+      height: 100%;
+    }
+    .emailBox {
+      height: 100%;
+    }
+  }
+  .fileTitle {
+    background: none !important;
+  }
+  .close {
+    position: absolute;
+    right: -15px;
+    top: -23px;
+    height: 30px;
+    width: 30px;
+    background: @white;
+    color: @btnSuccess;
+    border-radius: 15px;
+    z-index: 1000;
+    border: none;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    span {
+      display: block;
+      font-size: 30px;
+      line-height: 30px;
+      margin-top: -4px;
+    }
+    &:hover {
+      background: @btnSuccess;
+      color: @white;
+    }
+  }
+
+}

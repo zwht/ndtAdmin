@@ -1,0 +1,52 @@
+.translate.translateCheck(ng-loading='1' loading-show="loadingShow" random='1')
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now 校队
+    .translateBox
+        ul.leftNav(ng-scroll='myScroll')
+            li.first
+                h2 待办翻译任务
+            li(ng-repeat="item in ListData" ng-class="{active:item.active}" ng-click="changFile(item)")
+                h4
+                    .icon
+                    span(ng-bind="item.name")
+                p
+                    span 优先级:
+                    b(ng-bind="item.priority | numberChinese:'优先级'")
+                p
+                    span 截止时间:
+                    b(ng-bind="item.deadLine | date:'yyyy-MM-dd HH:mm:ss'")
+            li.no_data(ng-show="firstRequest&&noData") 没有数据了...
+            div(no-data ng-if="!firstRequest&&noData")
+
+        .main(ng-class="{fullScreen:fullScreenKey}")
+            .mainBox
+                .top
+                    .top1
+                        span 文件类型:
+                        b(ng-bind="activeItem.fileType | numberChinese:'文件类型'")
+                        span 翻译:
+                        b(ng-bind="activeItem.executor")
+                        a.a2.btn.success(ng-click="save()") 校对通过
+                        a.a2.btn(ng-click="cache()" ng-bind="cacheName")
+                        a.a2.btn(ng-click="notGo()") 打回
+                        a.a2.btn(ng-click="permutation=true" ng-show="!permutation") 横向
+                        a.a2.btn(ng-click="permutation=false" ng-show="permutation") 竖向
+                        //a.a2.btn(ng-click="download()") 下载
+                        a.a2.btn(ng-click="fullScreen()" ng-show="!fullScreenKey")  全屏展示
+                        a.a2.btn(ng-click="fullScreen()" ng-show="fullScreenKey")  关闭全屏
+                    .top2(ng-show="fullScreenKey")
+                        span 优先级:
+                        b(ng-bind="activeItem.priority | numberChinese:'优先级'")
+                        span 截止日期:
+                        b(ng-bind="activeItem.deadLine")
+                .cont.clear(drag ng-class="{permutation:permutation}")
+                    .container.pull-left
+                        i.icon.icon-ic_threebox
+                        div(file-show="activeItem" translated="translated" hidden-head="hiddenHead")
+                    .container.pull-left(ng-loading='1' loading-show="translatedLoadingShow" random='1')
+                        div
+                            .translatedBox(changer-key="changerKey" cache="cache" editor="transcribeContent" editor-obj="editorObj")

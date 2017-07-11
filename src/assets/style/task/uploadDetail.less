@@ -1,0 +1,73 @@
+.uploadDetail {
+  position: relative;
+  height: 100%;
+  .txt{margin-right: 20px;color: black}
+  .selectBox{
+    position: relative;
+    height: 100%;
+    .searchBox{
+      display: inline-block;
+      width: 200px;
+      height: 30px;
+      position: relative;
+      i{
+        position: absolute;
+        left: 12px;
+        top: 5px;
+        color:@borderColor ;
+      }
+      input{
+        padding-left: 28px;
+        width:98%;
+        height: 100%;
+        border: 1px solid @borderColor;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+    }
+    .timeArea{
+      float: left;
+      span,input{  float: left;  }
+      span.timeText{line-height: 30px;padding: 0 10px}
+      input{height: 30px;margin-right: 0 !important;}
+      span.laydate-icon{display:block;width: 200px;height: 30px;line-height: 30px}
+    }
+    span.work{margin-left: 15px}
+    input.work{
+      width:150px;
+      height:30px;
+      border: 1px solid @borderColor;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    span.icon{position: relative;top:2px}
+    span.contains{margin-left: 5px}
+    button.success{margin-left: 15px}
+  }
+  .contBox {
+    height: 100%;
+    padding: 100px 15px 15px;
+    .tableBx {
+      height: 100%;
+      border: 2px solid @borderColor;
+      position: relative;
+      padding-bottom: 50px;
+      .pagerBox {
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        bottom: 0;
+        text-align: right;
+      }
+
+      .tbB {
+        margin: -1px;
+        height: 100%;
+        overflow-y: auto
+      }
+    }
+  }
+
+
+
+}

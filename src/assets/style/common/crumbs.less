@@ -1,0 +1,28 @@
+.crumbs {
+  height: 40px;
+  width: 100%;
+  background: #f1f1f1;
+  padding: 10px;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 1px solid @borderColor;
+  color: lighten(@bgColor, 30%);
+  a {
+    margin: 0 4px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    color: lighten(@bgColor, 30%);
+    &:hover {
+      color: lighten(@bgColor, 10%);
+    }
+    &:last-child {
+      color: lighten(@bgColor, 10%);
+    }
+  }
+  a, i, span, b {
+    vertical-align: middle;
+  }
+
+}

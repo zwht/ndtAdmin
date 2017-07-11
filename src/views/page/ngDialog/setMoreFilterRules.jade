@@ -1,0 +1,55 @@
+.modal-header
+    button(type="button" ng-click="closeThisDialog()" class="close" data-dismiss="modal")
+        span(aria-hidden="true" ng-click="close()") ×
+    h4.modal-title 更多筛选规则
+.modal-body.clear
+    ul
+        li
+            label
+                span 国家:
+                input.source(max-input="200" type="text" ng-model="country" placeholder="请输入国家编号")
+        li
+            label
+                span 部门:
+                input.source(max-input="200" type="text" ng-model="department" placeholder="请输入部门编号")
+        li
+            label
+                span 职务:
+                input.source(max-input="200" type="text" ng-model="post" placeholder="请输入职务名称")
+        li
+            label
+                span 项目:
+                input.source(max-input="200" type="text" ng-model="project" placeholder="请输入项目名称")
+        li
+            label
+                span 文件名:
+                input.source(max-input="200" type="text" ng-model="fileName" placeholder="请输入文件名")
+        li
+            label
+                span 文件批次:
+                input.source(max-input="200" type="text" ng-model="source" placeholder="请输入文件批次")
+        li
+            label
+                span 文件类型:
+                input.source(max-input="200" type="text" ng-model="fileType" placeholder="请输入文件类型")
+        li
+            label
+                span 处理人:
+                input.source(max-input="200" type="text" ng-model="executor" placeholder="请输入处理人名称")
+        li
+            label
+                span 是否有附件:
+                select(ng-model='hasAttachment')
+                    option(value='') 全部
+                    option(value=true) 是
+                    option(value=false) 否
+        li
+            label
+                span 查询的工单类型:
+                select(ng-model='handler')
+                    option(value='') 全部
+                    option(value=true) 查询待办工单
+                    option(value=false) 查询可分配工单
+.modal-footer
+    button.btn.success.btn-save(type="button" ng-click="save()") 筛选
+    button.btn.btn-state-close(type="button" ng-click="closeThisDialog()") 关闭

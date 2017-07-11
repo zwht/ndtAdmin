@@ -1,0 +1,141 @@
+.preScrn.audit(ng-class='{"full-screen":screenflag}')
+    .head.left
+        .crumbs
+            b.icon.icon-position1
+            a 任务管理
+            i ⟩
+            a(ng-click="back()") 初筛任务
+            i ⟩
+            a.now 审核初筛任务
+            p.right
+                span 任务来源：
+                    span(ng-bind='post')
+                span.small-screen-hide1 批次号：
+                    span(ng-bind='batch')
+                span 数据类型：
+                    span(ng-bind='fileType| numberChinese:"文件类型"')
+                span 剩余待办：
+                    span(ng-bind='totalElement')
+                span 优先级：
+                    span(ng-bind='priority| numberChinese:"优先级"')
+        nav
+            span 关键词：
+            div.input-group(focus)
+                i.icon.icon-search.left
+                input.left(max-input="200" type='text' placeholder='请输入搜索关键词' ng-model='search' ng-keyup="searchData()")
+            span 发件时间：
+            input.laydate-icon#start(placeholder="请输入时间范围" ng-lay-date type="text" ng-model="startTime"
+            max-date="{{endTime}}")
+            span 至
+            input.laydate-icon#end(placeholder="请输入时间范围" ng-lay-date type="text" ng-model="endTime"
+            min-date="{{startTime}}")
+            i.icon(ng-class='{"icon-checkbox-normal":!onlyCheckboxActive,"icon-checkbox-checked1":onlyCheckboxActive}'
+            ng-click='onlyCheckboxClick()')
+            span.no-select(ng-click='onlyCheckboxClick()' style='cursor:pointer') 仅显示包含附件的邮件
+            button.bggreen.right(ng-click='allSave()') 确认完成
+            button.btn.green.right(ng-click='screenFn()') {{screenflag?'还原':'全屏'}}
+    .container
+        .inner_container(drag ng-loading='1' loading-show="loadingShow")
+            div.table_container.inblock
+                i.icon.icon-ic_threebox
+                div.outer_table_container
+                    .inner_table_container
+                        table.table
+                            thead
+                                tr
+                                    th
+                                        span(ng-init="importantKey=true"
+                                         ng-click="sortChange('important');executorKeimportantKeyy=!importantKey"
+                                          style="display:block; width:70px;") 
+                                            | 标记
+                                            i.icon.icon-sort1(ng-show="importantKey")
+                                            i.icon.icon-sort2(ng-show="!importantKey") 
+                                    th
+                                        span(ng-init="hasAttachmentKey=true" ng-click="sortChange('hasAttachment');hasAttachmentKey=!hasAttachmentKey" style="display:block; width:70px;") 
+                                            | 附件
+                                            i.icon.icon-sort1(ng-show="hasAttachmentKey")
+                                            i.icon.icon-sort2(ng-show="!hasAttachmentKey") 
+                                    th
+                                        span(ng-init="readKey=true" ng-click="sortChange('read');readKey=!readKey" style="display:block; width:70px;") 
+                                            | 阅读
+                                            i.icon.icon-sort1(ng-show="readKey")
+                                            i.icon.icon-sort2(ng-show="!readKey") 
+                                    th
+                                        span(ng-init="fromKey=true" ng-click="sortChange('detail.from.email');fromKey=!fromKey") 
+                                            | 收/发件人
+                                            i.icon.icon-sort1(ng-show="fromKey")
+                                            i.icon.icon-sort2(ng-show="!fromKey")  
+                                    th
+                                        span(ng-init="titleKey=true" ng-click="sortChange('title');titleKey=!titleKey") 
+                                            | 主题
+                                            i.icon.icon-sort1(ng-show="titleKey")
+                                            i.icon.icon-sort2(ng-show="!titleKey") 
+                                    th
+                                        span(ng-init="sendTimeKey=true" ng-click="sortChange('sendTime');sendTimeKey=!sendTimeKey") 
+                                            | 时间
+                                            i.icon.icon-sort1(ng-show="sendTimeKey")
+                                            i.icon.icon-sort2(ng-show="!sendTimeKey")  
+                            tbody
+                                tr(ng-repeat='tr in fileList | orderBy:sort:desc track by $index' ng-click='getEmailData($index)'
+                                ng-class='{active:tr.active,readed:tr.read}')
+                                    td.w-40
+                                        i.icon.icon-ic_five(ng-class='{active:tr.important}')
+                                    td.w-40
+                                        i.icon.icon-ic_paperclip(ng-show='tr.hasAttachment')
+                                    td.w-40(ng-click="setFileNoRead($event,tr)")
+                                        i.icon(ng-class='{"icon-ic_email":!tr.read,"icon-ic_mail_open":tr.read}')
+                                    td
+                                        p(ng-bind='tr.detail.from.email')
+                                    td
+                                        span.title(ng-bind='tr.title')
+                                        //span 邮件摘要部分
+                                    td
+                                        span(ng-bind="tr.sendTime|date:'yyyy-MM-dd HH:mm:ss'")
+                        div(no-data ng-if="!fileList.length")
+                div.page
+                    div(pagination="pageCurrent" page-count="pageCount" page-size='pageSize' call-back='callBack')
+            div.email_details_container.inblock
+                .title.left
+                    .inner_title
+                        span.overflow(ng-bind='"主题/文件名："+detailsData.title')
+                    .btn_group.inblock.right
+                        button.btn(ng-click='changeEmail(-1)') 上一封
+                        button.btn(ng-click='changeEmail(1)') 下一封
+                .main_container
+                    .main(ng-scroll check-scroll-bar="checkScrollBar" ng-class='{"scroll_flag":scrollFlag}')
+                        .impt_email_group
+                            .common.inblock
+                                .btn(ng-click='save(0)') 审核不通过
+                                .btn.success(ng-click='save(1)') 审核通过
+                            .hidden
+                                //textarea.not-allowed(autofocus disabled ng-model='baseDetailsData.reason')
+                                .table-container
+                                    table
+                                        tr
+                                            td 文件包名
+                                            td 文件来源
+                                            td 文件日期
+                                            td 备注记录
+                                            td 初筛结果
+                                        tr
+                                            td(style="width:200px;" title='{{baseDetailsData.title}}')
+                                                span(ng-bind='baseDetailsData.title')
+                                            td(title='{{baseDetailsData.detail.from.email}}')
+                                                span(ng-bind="baseDetailsData.detail.from.email" )
+                                            td(title="{{baseDetailsData.sendTime|date:'yyyy-MM-dd HH:mm:ss'}}")
+                                                span(ng-bind="baseDetailsData.sendTime|date:'yyyy-MM-dd HH:mm:ss'")
+                                            td(title='{{baseDetailsData.reason}}')
+                                                span(ng-bind="baseDetailsData.reason")
+                                            td
+                                                span(ng-bind='fileList.length?(baseDetailsData.important?"重要":"不重要"):""')
+                                .translate_container(ng-if="attTransDetail.length")
+                                    .left 需翻译内容:
+                                    .radio_group_container.clear
+                                        .radio_group.inblock(ng-repeat='da in attTransDetail track by $index')
+                                            i.icon(ng-class='{"icon-checkbox-checked1":da.trans,"icon-checkbox-normal":!da.trans}'
+                                            ng-click='radioClick(da)')
+                                            span(ng-bind='da.name' ng-click='accessoryDetails(da)')
+                        .body
+                            p 正文
+                            .email_box(ng-if="baseDetailsData.fileType===1" email-html="emailHtml" email-obj="detailsData")
+                            .email_box(ng-if="baseDetailsData.fileType!==1" file-show="fileObj" translated="translated" hidden-head="hiddenHead" style="height:500px")

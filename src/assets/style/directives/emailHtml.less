@@ -1,0 +1,63 @@
+.emailHtml {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  height: 100%;
+  overflow-y: auto;
+  .emailHead {
+    padding: 10px;
+    background: lighten(@color-base2, 52%);
+    border-bottom: 1px solid @borderColor;
+    h2 {
+
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .item {
+      font-size: 14px;
+      position: relative;
+      margin: 3px 0;
+      min-height: 16px;
+      & > b {
+        display: block;
+        width: 60px;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      & > div {
+        display: block;
+        width: 100%;
+        padding-left: 60px;
+        color: lighten(@mainTextColor, 50%);
+      }
+      .req {
+        b {
+          color: @btnSuccess;
+          margin-right: 5px;
+        }
+      }
+      .rep {
+        b {
+          color: @mainTextColor;
+          margin-right: 5px;
+        }
+        i {
+          margin-right: 8px;
+        }
+      }
+    }
+
+  }
+  .emailContent {
+    padding: 10px;
+  }
+  .emailNoContent {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .wangEditor-menu-container{ display: none;}
+  .wangEditor-container{ padding: 0;}
+}

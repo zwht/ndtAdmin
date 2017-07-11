@@ -1,0 +1,16 @@
+.fileShowBox(ng-loading='1' loading-show="loadingShowFile" random='1')
+    .fileTitle
+        h2.overflow(ng-bind="fileShow.name")
+        .right
+            select.select(ng-model="fontActive" ng-change="fontChange()" ng-options="m.name for m in fontSize")
+            i.btn(ng-click="changeKey=false" ng-show="changeKey&&!translated") 原始数据
+            i.btn(ng-click="changeKey=true" ng-show="!changeKey&&!translated") 查看翻译
+    .fileMain(ng-style="fontActive.value")
+        .translatedCont(ng-if="changeKey")
+            div(ng-bind-html="transcribeContent" ng-show="transcribeContent!='null'")
+            div(no-data ng-show="transcribeContent=='null'")
+        .emailBox(email-html="emailHtml" email-obj="fileShow" hidden-head="hiddenHead"
+        ng-if="fileShow.fileType==1" ng-show="!changeKey")
+        my-yn-pdf-view(ng-show="!changeKey" obj='fileShow' ng-if="fileShow.fileType==2||fileShow.fileType==4")
+        div.nonsupport(ng-show="!changeKey" ng-if="fileShow.fileType==4")
+            span 对不起，暂不支持该类型文件预览。。。

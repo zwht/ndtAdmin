@@ -1,0 +1,76 @@
+.waitingTask(screen-change ng-loading='1' loading-show="loadingShow" random='1' ng-init="init()")
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now(ng-bind="pageName")
+        .screenArea()
+            .screenLeft
+                ul
+                    li
+                        label 国家:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="city" placeholder="请输入国家编号")
+                    li
+                        label 部门:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="department" placeholder="请输入部门编号")
+                    li
+                        label 职位:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="position" placeholder="请输入职位名称")
+                    li
+                        label 文件名称:&nbsp;
+                            input(ng-model="fileName" placeholder="请输入文件名")
+                    //li
+                        label(ng-show="!oneRole") 任务类型:
+                        select.selectP(ng-show="!oneRole" ng-model="nodeType" ng-options="m.name for m in taskList")
+                    li
+                        button.btn.success(ng-click="taskScreen()") 搜索
+    .contBox
+        .tableBx
+            .tbB(ng-if="ListData.length")
+                table.table
+                    thead
+                        tr
+                            th.w-50 序号
+                            th.w-80
+                                span(ng-init="taskTypeKey=true" ng-click="sortChange('taskType');taskTypeKey=!taskTypeKey") 
+                                    | 任务类型
+                                    i.icon.icon-sort1(ng-show="taskTypeKey")
+                                    i.icon.icon-sort2(ng-show="!taskTypeKey") 
+                            th
+                                span(ng-init="nameKey=true" ng-click="sortChange('name');nameKey=!nameKey") 
+                                    | 文件名称
+                                    i.icon.icon-sort1(ng-show="nameKey")
+                                    i.icon.icon-sort2(ng-show="!nameKey")
+
+                            //th.w-80 文件类型
+                            th
+                                span(ng-init="createTimeKey=true" ng-click="sortChange('createTime');createTimeKey=!createTimeKey") 
+                                    | 创建时间
+                                    i.icon.icon-sort1(ng-show="createTimeKey")
+                                    i.icon.icon-sort2(ng-show="!createTimeKey") 
+                            th
+                                span(ng-init="deadLineKey=true" ng-click="sortChange('deadLine');deadLineKey=!deadLineKey") 
+                                    | 截止时间
+                                    i.icon.icon-sort1(ng-show="deadLineKey")
+                                    i.icon.icon-sort2(ng-show="!deadLineKey") 
+                            th
+                                span(ng-init="executorKey=true" ng-click="sortChange('executor');executorKey=!executorKey") 
+                                    | 处理人
+                                    i.icon.icon-sort1(ng-show="executorKey")
+                                    i.icon.icon-sort2(ng-show="!executorKey")  
+                            th 操作
+                    tbody
+                        tr(ng-repeat="item in ListData | orderBy:sort:desc ")
+                            td.w-50(ng-bind="pageSize*(pageCurrent-1)+$index+1")
+                            td.w-80(ng-bind="item.taskType | numberChinese:'任务类型'")
+                            td(ng-bind="item.name")
+                            //td.w-80(ng-bind="item.fileType | numberChinese:'文件类型'")
+                            td.w-150(ng-bind="item.createTime | date: 'yyyy-MM-dd HH:mm:ss'")
+                            td.w-150(ng-bind="item.deadLine | date: 'yyyy-MM-dd HH:mm:ss'")
+                            td(ng-bind="item.executor")
+                            td
+                                button.btn.success(ng-click="goCS(item)") 处理
+            div(no-data ng-if="!ListData.length&&!loadingShow")
+            .pagerBox(ng-show="ListData.length>0")
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")

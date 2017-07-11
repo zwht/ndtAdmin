@@ -1,0 +1,95 @@
+.waitingTask(ng-loading='1' loading-show="loadingShow" random='1')
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now 已完成任务
+        .screenArea
+            .screenLeft
+                ul
+                    li
+                        label 处理人:&nbsp;
+                            input(max-input="200" type="text" placeholder="请输入处理人名字" ng-model="keyWord")
+
+                    li
+                        label 任务类型:
+                        select(ng-model="nodeType" ng-options="m.name for m in taskList")
+                    li
+                        button.btn.success(ng-click="change()") 搜索
+
+    .contBox
+        .tableBx
+            .tbB(ng-loading='4' loading-show="loadingShow1" ng-show="data.length>0")
+                table.table
+                    thead
+                        tr
+
+                            th
+                                span 序号
+                            th 
+                                span(ng-init="countryKey=true" ng-click="sortChange('country');countryKey=!countryKey") 
+                                    | 任务来源
+                                    i.icon.icon-sort1(ng-show="countryKey")
+                                    i.icon.icon-sort2(ng-show="!countryKey")
+                            th
+                                span(ng-init="fileNameKey=true" ng-click="sortChange('fileName');fileNameKey=!fileNameKey") 
+                                    | 文件名
+                                    i.icon.icon-sort1(ng-show="fileNameKey")
+                                    i.icon.icon-sort2(ng-show="!fileNameKey")
+                            th
+                                span(ng-init="fileTypeKey=true" ng-click="sortChange('fileType');fileTypeKey=!fileTypeKey") 
+                                    | 文件类型
+                                    i.icon.icon-sort1(ng-show="fileTypeKey")
+                                    i.icon.icon-sort2(ng-show="!fileTypeKey")
+                            
+                            th
+                                span(ng-init="nodeTypeKey=true" ng-click="sortChange('nodeType');nodeTypeKey=!nodeTypeKey") 
+                                    | 任务类型
+                                    i.icon.icon-sort1(ng-show="nodeTypeKey")
+                                    i.icon.icon-sort2(ng-show="!nodeTypeKey")
+                                 
+                            th
+                                span(ng-init="creatorKey=true" ng-click="sortChange('creator');creatorKey=!creatorKey") 
+                                    | 创建人
+                                    i.icon.icon-sort1(ng-show="creatorKey")
+                                    i.icon.icon-sort2(ng-show="!creatorKey")
+                               
+                            th
+                                span(ng-init="startTimeKey=true" ng-click="sortChange('startTime');startTimeKey=!startTimeKey") 
+                                    | 创建时间
+                                    i.icon.icon-sort1(ng-show="startTimeKey")
+                                    i.icon.icon-sort2(ng-show="!startTimeKey")
+                            th
+                                span(ng-init="priorityKey=true" ng-click="sortChange('priority');priorityKey=!priorityKey") 
+                                    | 优先级
+                                    i.icon.icon-sort1(ng-show="priorityKey")
+                                    i.icon.icon-sort2(ng-show="!priorityKey")
+                                 
+                            th
+                                span(ng-init="endTimeKey=true" ng-click="sortChange('endTime');endTimeKey=!endTimeKey") 
+                                    | 结束时间
+                                    i.icon.icon-sort1(ng-show="endTimeKey")
+                                    i.icon.icon-sort2(ng-show="!endTimeKey")
+                                 
+                            th
+                                span(ng-init="executorKey=true" ng-click="sortChange('executor');executorKey=!executorKey") 
+                                    | 处理人
+                                    i.icon.icon-sort1(ng-show="executorKey")
+                                    i.icon.icon-sort2(ng-show="!executorKey")
+                            
+                    tbody
+                        tr(ng-repeat="item in data | orderBy:sort:desc track by $index")
+                            td(ng-bind="pageSize*(pageCurrent-1)+$index+1")
+                            td {{item.country+"-"+item.department+"-"+item.post}}
+                            td.clickItem(ng-click="showFileConten(item,true)") {{item.fileName}}
+                            td(ng-bind="item.fileType | numberChinese:'文件类型'")
+                            td(ng-bind="item.nodeType | numberChinese:'任务类型'")
+                            td {{item.creator}}
+                            td {{item.startTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                            td(ng-bind="item.priority | numberChinese:'优先级'")
+                            td {{item.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                            td {{item.executor}}
+            div(no-data ng-if="!data.length&&!loadingShow")
+            .pagerBox(ng-show="data.length>0")
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")

@@ -1,0 +1,50 @@
+.uploadDetail
+    .empList
+        .headBox
+            .crumbs
+                b.icon.icon-position1
+                a 数据分析
+                i ⟩
+                a.now(ng-click="goList()") 上传历史
+                i ⟩
+                a.now 上传详情
+                .crumbsRight.pull-right
+                    span 批次号：
+                    span.txt(ng-bind="batch")
+                    span 上传时间：
+                    span.txt(ng-bind="timeId | date:'yyyy-MM-dd HH:mm:ss'")
+                    span 状态：
+                    span.txt(ng-bind="detailStatus==1?'已完成':'未完成'")
+                    span 错误总计：
+                    span.txt(ng-bind="failed")
+            .selectBox
+                span.pull-left 状态:
+                    select.selectP(ng-model="status" ng-change="change()")
+                        option(value="") 全部
+                        option(value="1") 成功
+                        option(value="0") 失败
+                button.btn.success.pull-right(ng-click="listFileExport()") 导出结果
+
+        .contBox
+            .tableBx
+                .tbB(ng-loading='4' loading-show="loadingShow1" )
+                    table.table
+                        thead
+                            tr
+
+                                th 序号
+                                th 文件名
+                                th 状态
+                                th 原因
+
+                        tbody
+                            tr(ng-repeat="obj in data track by $index")
+                                td {{$index+1}}
+                                td {{obj.fileName}}
+                                td {{obj.status}}
+                                td {{obj.reason}}
+
+
+
+                .pagerBox
+                    div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")

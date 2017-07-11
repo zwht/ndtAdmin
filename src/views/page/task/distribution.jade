@@ -1,0 +1,109 @@
+.waitingTask.distribution(screen-change ng-loading='1' loading-show="loadingShow" random='1' ng-init="init()")
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now(ng-bind="pageName")
+        .screenArea
+            .screenLeft.screenPadLeft
+                ul
+                    li
+                        label 国家:&nbsp;
+                            input.source(max-input="200" ng-model="city" placeholder="请输入国家编号")
+                    li
+                        label 部门:&nbsp;
+                            input.source(max-input="200" ng-model="department" placeholder="请输入部门编号")
+                    li
+                        label 职位:&nbsp;
+                            input.source(max-input="200" ng-model="position" placeholder="请输入职位名称")
+                    li
+                        label 文件名:&nbsp;
+                        input(max-input="200" ng-model="fileName" placeholder="请输入文件名称")
+                    //li
+                        label 任务类型:&nbsp;
+                        select(ng-model="nodeType" ng-options="m.name for m in taskList" )
+                    li
+                        label 优先级:&nbsp;
+                        select(ng-model="priority" ng-options="m.name for m in priorityList")
+                    li
+                        label 处理人:&nbsp;
+                        select(ng-model="dealUser" ng-options="m.name for m in allUser")
+                    li
+                        button.btn.success(ng-click="search()") 搜索
+            .screenRight
+                label 转给:
+                select.selectP(ng-model="removeUser" ng-options="m.name for m in removeUserBox" ng-change="addDisabled()")
+                button.btn.success(ng-click="distribution()") 确认
+    .contBox
+        .tableBx
+            .tbB(ng-show="ListData.length>0")
+                table.table
+                    thead
+                        tr
+                            th.seleAll.w-80(ng-click="changeItem('all')" ng-class="{allSelect:allSelect}")
+                                i.icon.icon-checkbox-normal(ng-show="!allSelect")
+                                i.icon.icon-checkbox-checked1(ng-show="allSelect")
+                                span 全选
+                            th.w-50 序号
+                            th.w-80
+                                span(ng-init="taskTypeKey=true" ng-click="sortChange('taskType');taskTypeKey=!taskTypeKey") 
+                                    | 任务类型
+                                    i.icon.icon-sort1(ng-show="taskTypeKey")
+                                    i.icon.icon-sort2(ng-show="!taskTypeKey") 
+                            th
+                                span(ng-init="sourceKey=true" ng-click="sortChange('source');sourceKey=!sourceKey") 
+                                    | 文件来源
+                                    i.icon.icon-sort1(ng-show="sourceKey")
+                                    i.icon.icon-sort2(ng-show="!sourceKey")
+                            th
+                                span(ng-init="nameKey=true" ng-click="sortChange('name');nameKey=!nameKey") 
+                                    | 文件名称
+                                    i.icon.icon-sort1(ng-show="nameKey")
+                                    i.icon.icon-sort2(ng-show="!nameKey") 
+                            th.w-80
+                                span(ng-init="fileTypeKey=true" ng-click="sortChange('fileType');fileTypeKey=!fileTypeKey") 
+                                    | 文件类型
+                                    i.icon.icon-sort1(ng-show="fileTypeKey")
+                                    i.icon.icon-sort2(ng-show="!fileTypeKey") 
+                            th.w-150
+                                span(ng-init="createTimeKey=true" ng-click="sortChange('createTime');createTimeKey=!createTimeKey") 
+                                    | 创建时间
+                                    i.icon.icon-sort1(ng-show="createTimeKey")
+                                    i.icon.icon-sort2(ng-show="!createTimeKey") 
+                            th
+                                span(ng-init="deadLineKey=true" ng-click="sortChange('deadLine');deadLineKey=!deadLineKey") 
+                                    | 截止时间
+                                    i.icon.icon-sort1(ng-show="deadLineKey")
+                                    i.icon.icon-sort2(ng-show="!deadLineKey")  
+                            th
+                                span(ng-init="executorKey=true" ng-click="sortChange('executor');executorKey=!executorKey") 
+                                    | 处理人
+                                    i.icon.icon-sort1(ng-show="executorKey")
+                                    i.icon.icon-sort2(ng-show="!executorKey")  
+                            th
+                                //b.btn(ng-click="cancelTranslateTask()") 批量删除
+                                b.btn 操作
+                    tbody
+                        tr(ng-repeat="item in ListData | orderBy:sort:desc")
+                            td.w-80(ng-click="changeItem(item,$index)" ng-class="{disabled:item.disabled}")
+                                i.icon.icon-checkbox-normal(ng-show="!item.active")
+                                i.icon.icon-checkbox-checked1(ng-show="item.active")
+                            td.w-50(ng-bind="pageSize*(pageCurrent-1)+$index+1")
+                            td.w-80(ng-bind="item.taskType | numberChinese:'任务类型'")
+                            td(ng-bind="item.source")
+                            td.clickItem(ng-click="showFileConten(item)" ng-bind="item.name")
+                            td.w-80(ng-bind="item.fileType | numberChinese:'文件类型'")
+                            td.w-150(ng-bind="item.createTime | date: 'yyyy-MM-dd HH:mm:ss'")
+                            td
+                                span(ng-show="!item.Modify" ng-bind="item.deadLine | date: 'yyyy-MM-dd HH:mm:ss'")
+                                i.icon.icon-add(ng-show="!item.Modify" ng-click="showModify(item)")
+                                input.deadLineTime(ng-show="item.Modify" ng-lay-date type="text" id="kk{{$index}}" ng-model="item.abortTime"
+                                min-date="{{item.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}"  placeholder="请输入截止时间")
+                                i.icon.icon-done(ng-show="item.Modify" ng-click="saveModify(item)")
+                            td(ng-bind="item.executor")
+                            td
+                                button.btn.success(ng-click="cancelTranslateTask(item)") 删除
+            div(no-data ng-if="!ListData.length&&loadingShow")
+            .pagerBox(ng-show="ListData.length>0")
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")

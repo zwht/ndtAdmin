@@ -1,0 +1,102 @@
+.waitingTask.distribution(screen-change ng-loading='1' loading-show="loadingShow" random='1' ng-init="init()")
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 信贷管理
+            i ⟩
+            a.now(ng-bind="pageName")
+        //.screenArea
+            .screenLeft.screenPadLeft
+                ul
+                    li
+                        label 国家:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="city" placeholder="请输入国家编号")
+                    li
+                        label 部门:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="department" placeholder="请输入部门编号")
+                    li
+                        label 职位:&nbsp;
+                            input.source(max-input="200" type="text" ng-model="position" placeholder="请输入职位名称")
+                    //li
+                        label 任务类型:
+                        select(ng-model="nodeType" ng-options="m.name for m in taskList")
+                    li
+                        label 优先级:
+                        select(ng-model="priority" ng-options="m.name for m in priorityList")
+                    li
+                        label 处理人:
+                        select(ng-model="dealUser" ng-options="m.name for m in allUser")
+                    li
+                        button.btn.success(ng-click="search()") 搜索
+            .screenRight
+                label 转给:
+                select.selectP(ng-model="removeUser" ng-options="m.name for m in removeUserBox" ng-change="addDisabled()")
+                button.btn.success(ng-click="distribution()") 确认
+    //.contBox
+        .tableBx
+            .tbB(ng-show="ListData.length>0")
+                table.table
+                    thead
+                        tr
+                            th.seleAll.w-80(ng-click="changeItem('all')" ng-class="{allSelect:allSelect}")
+                                span
+                                    i.icon.icon-checkbox-normal(ng-show="!allSelect")
+                                    i.icon.icon-checkbox-checked1(ng-show="allSelect")
+                                    span 全选
+                            th.w-50 序号
+                            th
+                                span(ng-init="batchKey=true" ng-click="sortChange('groupVo.batch');batchKey=!batchKey") 
+                                    | 批次号
+                                    i.icon.icon-sort1(ng-show="batchKey")
+                                    i.icon.icon-sort2(ng-show="!batchKey") 
+                            th.w-80
+                                span(ng-init="nodeTypeKey=true" ng-click="sortChange('nodeType');nodeTypeKey=!nodeTypeKey") 
+                                    | 任务类型
+                                    i.icon.icon-sort1(ng-show="nodeTypeKey")
+                                    i.icon.icon-sort2(ng-show="!nodeTypeKey")  
+                            th
+                                span(ng-init="postKey=true" ng-click="sortChange('groupVo.post');postKey=!postKey") 
+                                    | 文件来源
+                                    i.icon.icon-sort1(ng-show="postKey")
+                                    i.icon.icon-sort2(ng-show="!postKey")  
+                            th.w-80
+                                span(ng-init="numberKey=true" ng-click="sortChange('number[2]');numberKey=!numberKey") 
+                                    | 数量
+                                    i.icon.icon-sort1(ng-show="numberKey")
+                                    i.icon.icon-sort2(ng-show="!numberKey")   
+                            th.w-80
+                                span(ng-init="fileTypeKey=true" ng-click="sortChange('fileType');fileTypeKey=!fileTypeKey") 
+                                    | 文件类型
+                                    i.icon.icon-sort1(ng-show="fileTypeKey")
+                                    i.icon.icon-sort2(ng-show="!fileTypeKey") 
+                            th.w-150
+                                span(ng-init="createTimeKey=true" ng-click="sortChange('createTime');createTimeKey=!createTimeKey") 
+                                    | 创建时间
+                                    i.icon.icon-sort1(ng-show="createTimeKey")
+                                    i.icon.icon-sort2(ng-show="!createTimeKey") 
+                            th
+                                span(ng-init="executorKey=true" ng-click="sortChange('executor');executorKey=!executorKey") 
+                                    | 处理人
+                                    i.icon.icon-sort1(ng-show="executorKey")
+                                    i.icon.icon-sort2(ng-show="!executorKey")
+                            //th
+                            //    b.btn(ng-click="cancelFilterTask()") 批量删除
+                    tbody
+                        tr(ng-repeat="item in ListData | orderBy:sort:desc ")
+                            td.w-80(ng-click="changeItem(item,$index)" ng-class="{disabled:item.disabled}")
+                                i.icon.icon-checkbox-normal(ng-show="!item.active")
+                                i.icon.icon-checkbox-checked1(ng-show="item.active")
+                            td.w-50(ng-bind="pageSize*(pageCurrent-1)+$index+1")
+                            td(ng-bind="item.groupVo.batch")
+                            td.w-80(ng-bind="item.nodeType | numberChinese:'任务类型'")
+                            td(ng-bind="item.groupVo.post")
+                            td.w-80(ng-bind="item.number[2]")
+                            td.w-80(ng-bind="item.fileType | numberChinese:'文件类型'")
+                            td.w-150(ng-bind="item.createTime | date: 'yyyy-MM-dd HH:mm:ss'")
+                            td(ng-bind="item.executor")
+                            //td
+                            //    button.btn.success(ng-click="cancelFilterTask(item)") 取消
+
+            div(no-data ng-if="!ListData.length&&!loadingShow")
+            .pagerBox
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")

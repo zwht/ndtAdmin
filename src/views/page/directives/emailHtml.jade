@@ -1,0 +1,45 @@
+.emailHtml
+    div(no-data ng-if="!emailObj.content&&!emailObj.title")
+    .emailHead(ng-if="emailObj.content&&emailObj.emlToEmails")
+        //h2(ng-bind-html='emailObj.title')
+        .item(ng-if="emailObj.emlFromEmail.name&&emailObj.emlFromEmail.email")
+            b 发件人：
+            .req
+                b(ng-bind='emailObj.emlFromEmail.name')
+                span(ng-bind='"<"+emailObj.emlFromEmail.email+">"')
+        .item(ng-if="emailObj.emlSendTime")
+            b 时&nbsp;&nbsp;&nbsp;&nbsp;间：
+            div
+                span(ng-bind='emailObj.emlSendTime | date:"yyyy-MM-dd HH:mm:ss"')
+        .item(ng-if="emailObj.emlToEmails.length")
+            b 收件人：
+            div
+                span.rep(ng-repeat='item in emailObj.emlToEmails')
+                    b(ng-bind='item.name')
+                    span(ng-bind='"<"+item.email+">"')
+                    i(ng-hide="$last") ;
+        .item(ng-if="emailObj.emlCcEmails.length")
+            b 抄&nbsp;&nbsp;&nbsp;&nbsp;送：
+            div
+                span.rep(ng-repeat='item in emailObj.emlCcEmails')
+                    b(ng-bind='item.name')
+                    span(ng-bind='"<"+item.email+">"')
+                    i(ng-hide="$last") ;
+        .item(ng-if="emailObj.emlBccEmails.length")
+            b 密&nbsp;&nbsp;&nbsp;&nbsp;送：
+            div
+                span.rep(ng-repeat='item in emailObj.emlBccEmails')
+                    b(ng-bind='item.name')
+                    span(ng-bind='"<"+item.email+">"')
+                    i(ng-hide="$last") ;
+        .item(ng-if="emailObj.attachments.length")
+            b 附&nbsp;&nbsp;&nbsp;&nbsp;件：
+            div
+                span.rep(ng-repeat='item in emailObj.attachments')
+                    b(ng-bind='item.fileName')
+                    //span(ng-bind='"<"+item.filePath+">"')
+    .emailContent(ng-show="emailObj.content&&editKey" context-menu="contextMenuTestList"
+    call-back="contextMenuCallBack")
+        .hideText
+    .emailContent(ng-if="emailObj.content&&!editKey" ng-bind-html='emailObj.content')
+

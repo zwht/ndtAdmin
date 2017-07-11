@@ -1,0 +1,33 @@
+.wangEditor-container {
+  height: 100%;
+  border: 0;
+  position: relative;
+  .wangEditor-menu-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 40px;
+    line-height: 40px;
+    background: lighten(@borderColor, 20%);
+    border-bottom: 1px solid @borderColor;
+    .menu-item a {
+      padding: 13px 0;
+    }
+  }
+  .wangEditor-menu-shadow {
+    box-shadow: none;
+  }
+  .wangEditor-txt {
+    height: 99% !important;
+    padding-top: 50px;
+    margin: 0;
+    cursor: text;
+    &:hover {
+      background: lighten(@borderColor, 30%);
+    }
+    p {
+      margin: 0;
+    }
+  }
+}

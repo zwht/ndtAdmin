@@ -1,0 +1,77 @@
+.waitingTask.uploadList(ng-loading='1' loading-show="loadingShow" random='1')
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now 上传历史
+        .screenArea
+            .screenLeft
+                ul
+                    li
+                        label 上传时间:
+                        input.laydate-icon(ng-lay-date type="text" id="id1" ng-model="startTime"
+                        max-date="{{endTime}}" placeholder="请输入上传时间")
+                        label 至
+                        input.laydate-icon(ng-lay-date type="text" id="id2" ng-model="endTime"
+                            min-date="{{startTime}}" placeholder="请输入完成时间")
+                    li
+                        button.btn.success(ng-click="search()") 搜索
+    .contBox
+        .tableBx
+            .tbB(ng-loading='4' loading-show="loadingShow1" ng-show="data.length>0")
+                table.table
+                    thead
+                        tr
+
+                            th.w-50 序号
+                            th
+                                span(ng-init="batchKey=true" ng-click="sortChange('batch');batchKey=!batchKey") 
+                                    | 批次号
+                                    i.icon.icon-sort1(ng-show="batchKey")
+                                    i.icon.icon-sort2(ng-show="!batchKey") 
+                            th.w-150
+                                span(ng-init="uploadTimeKey=true" ng-click="sortChange('uploadTime');uploadTimeKey=!uploadTimeKey") 
+                                    | 上传时间
+                                    i.icon.icon-sort1(ng-show="uploadTimeKey")
+                                    i.icon.icon-sort2(ng-show="!uploadTimeKey")  
+                            th
+                                span(ng-init="totalKey=true" ng-click="sortChange('total');totalKey=!totalKey") 
+                                    | 总文件数
+                                    i.icon.icon-sort1(ng-show="totalKey")
+                                    i.icon.icon-sort2(ng-show="!totalKey") 
+                            th
+                                span(ng-init="failedKey=true" ng-click="sortChange('failed');failedKey=!failedKey") 
+                                    | 失败数
+                                    i.icon.icon-sort1(ng-show="failedKey")
+                                    i.icon.icon-sort2(ng-show="!failedKey") 
+                            th
+                                span(ng-init="duplicatedKey=true" ng-click="sortChange('duplicated');duplicatedKey=!duplicatedKey") 
+                                    | 重复数
+                                    i.icon.icon-sort1(ng-show="duplicatedKey")
+                                    i.icon.icon-sort2(ng-show="!duplicatedKey")  
+                            th
+                                span(ng-init="statusKey=true" ng-click="sortChange('status');statusKey=!statusKey") 
+                                    | 状态
+                                    i.icon.icon-sort1(ng-show="statusKey")
+                                    i.icon.icon-sort2(ng-show="!statusKey")  
+                            th.w-150
+                                span(ng-init="finishTimeKey=true" ng-click="sortChange('finishTime');finishTimeKey=!finishTimeKey") 
+                                    | 完成时间
+                                    i.icon.icon-sort1(ng-show="finishTimeKey")
+                                    i.icon.icon-sort2(ng-show="!finishTimeKey")  
+                    tbody
+                        tr(ng-click="goDetail(obj)" ng-repeat="obj in data | orderBy:sort:desc track by $index")
+                            td.w-50(ng-bind="pageSize*(pageCurrent-1)+$index+1")
+                            td {{obj.batch}}
+                            td.w-150 {{obj.uploadTime}}
+                            td {{obj.total}}
+                            td {{obj.failed}}
+                            td {{obj.duplicated}}
+                            td(ng-bind="obj.status==1?'已完成':'未完成'")
+                            td.w-150 {{obj.finishTime}}
+
+            div(no-data ng-if="!data.length&&!loadingShow")
+            .pagerBox
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")
+

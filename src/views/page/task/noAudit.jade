@@ -1,0 +1,68 @@
+.waitingTask.noAudit
+    .headBox
+        .crumbs
+            b.icon.icon-position1
+            a 数据处理
+            i ⟩
+            a.now 未审核通过
+        .screenArea
+            .screenLeft
+                ul
+                    li
+                        label 开始时间:
+                        input.source.laydate-icon(max-input="200" type="text" ng-model="importStartTime" placeholder="请输入开始时间" ng-lay-date id='id1' max-date='{{importEndTime}}')
+                    li
+                        label 结束时间:
+                        input.source.laydate-icon(max-input="200" type="text" ng-model="importEndTime" placeholder="请输入结束时间" ng-lay-date id='id2' min-date='{{importStartTime}}')
+                    li
+                        label
+                            span 职务:
+                        input.source(max-input="200" type="text" ng-model="post" placeholder="请输入职务名称")
+                    li
+                        label
+                            span 文件名:
+                        input.source(max-input="200" type="text" ng-model="fileName" placeholder="请输入文件名")
+                    li
+                        label
+                            span 处理人:
+                        input.source(max-input="200" type="text" ng-model="executor" placeholder="请输入处理人名称")
+                    li(ng-if='handler.length===2')
+                        label 查询方式:
+                        select(ng-options='item.v as item.t for item in handler' ng-model='handlerModel')
+                    //li
+                    //    button.btn.success(ng-click="moreFilterRules()") 设置更多筛选条件
+                    //li
+                    //    button.btn.success(ng-click="clearRules()") 清空所有筛选条件
+                    li
+                        button.btn.success(ng-click="init()") 搜索
+                    //li
+    .contBox
+        .tableBx
+            .tbB(ng-if="ListData.length" ng-show='!loadingShow')
+                table.table
+                    thead
+                        tr
+                            th(ng-if='jurisdiction')
+                            th 名称
+                            th 任务来源
+                            th 审核未通过原因
+                            th 创建人
+                            th 处理人
+                            th(ng-if='jurisdiction') 操作
+                    tbody
+                        tr(ng-repeat="item in ListData")
+                            td(ng-if='jurisdiction')
+                                i.icon(ng-class='{"icon-checkbox-normal":!item.active,"icon-checkbox-checked1":item.active}' ng-click='checkboxFn(item)')
+                            td(ng-bind='item.name')
+                            td(ng-bind="item.country+'-'+item.department+'-'+item.source")
+                            td(ng-bind='item.tag')
+                            td(ng-bind='item.creator')
+                            td(ng-bind='item.executor')
+                            td.last(ng-click='reCreate(item)' ng-if='jurisdiction') 重新生成初筛工单
+            div(ng-loading='1' loading-show="1" ng-show='loadingShow')
+            div(no-data ng-if="!ListData.length&&!loadingShow")
+            .pagerBox(ng-if='ListData.length')
+                .btn-container(ng-if='jurisdiction')
+                    i.icon(ng-class='{"icon-checkbox-normal":!checkAll,"icon-checkbox-checked1":checkAll}' ng-click='checkAllFn()')
+                    button.btn(ng-class='{success:hasItemActive}' ng-click='reCreate(item)') 批量重新生成初筛工单
+                div(pagination="pageCurrent" page-count="pageCount" page-size="pageSize"  call-back="callBack")
