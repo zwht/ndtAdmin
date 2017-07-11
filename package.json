@@ -1,7 +1,7 @@
 {
-  "name": "diWuWei",
+  "name": "ndtAdmin",
   "version": "0.0.0",
-  "description": "第五维项目",
+  "description": "农贷通后台管理",
   "main": "index.js",
   "scripts": {
     "server":"gulp server",
